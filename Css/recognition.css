@@ -1,0 +1,612 @@
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
+* {
+    -webkit-overflow-scrolling: touch;
+}
+html,body {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+body {
+    font-family: 'Noto Sans', sans-serif;
+    position: fixed;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -o-user-select: none;
+    font-size: 14px;
+}
+#container, .main-container{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+/*#edited*/
+.page-box .page-content{
+    height: 93%;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 40px;
+    bottom: 0px;
+    background-color: #FFF;
+    overflow: scroll;
+}
+.page-box .page-head {
+    height: 40px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+    background-color: #000;
+    color: #FFF;
+    z-index: 1;
+}
+/*#edited*/
+.page-box .page-head .title{
+    left:100px;
+    right:100px;
+    position:absolute;
+    width:auto;
+    overflow:hidden;
+    line-height:20px;
+    text-align:center;
+    font-weight: normal;
+    font-size: 14px;
+}
+.page-box .page-head .nav-left {
+    width: auto;
+    float: left;
+}
+
+.page-box .page-head .nav-right {
+    width: auto;
+    float: right;
+}
+
+.nav-button {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    vertical-align: top;
+    line-height: 40px;
+}
+.nav-button.enabled{
+    color: rgb(248,166,58);
+}
+.nav-button.close{
+    background-image:none;
+    line-height: 40px;
+    font-size:16px;
+    text-align:center;
+}
+.nav-button.back{
+    background-image: url(../../images/recognition/recognition.png);
+    background-position: 5px 5px;
+    background-size: 200px 300px;
+}
+.nav-button.select{
+    background-image: url(../../images/recognition/recognition.png);
+
+}
+.nav-button.selected{
+    background-image: url(../../images/recognition/recognition.png);
+
+}
+
+.nav-button.calender{
+    background-image: url(../../images/recognition/recognition.png);
+    margin: 0px;
+}
+
+/*-- swipes --*/
+.swipe {
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+}
+
+.swipe-wrap {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+
+.swipe-wrap > .page-box {
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.swipe-wrap > .theatre-scene {
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+.no-endorsements {
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 40px;
+    background-color:#FFF;
+}
+
+.no-endorsements .content{
+   height: 250px;
+   width: 250px;
+   margin:auto;
+   top:50%;
+   margin-top: -125px;
+   position:absolute;
+   left:50%;
+   margin-left: -125px;
+}
+.no-endorsements .img-holder{
+    height:100px;
+    width: 200px;
+    margin:auto;
+    background-image: url(../../images/recognition/recognition.png);
+    background-position: 10px 186px;
+    background-size: 181px 317px;
+}
+.no-endorsements .text-content{
+    width:200px;
+    text-align:center;
+    margin:auto;
+}
+.no-endorsements .text-content .head{
+    font-weight:bold;
+    line-height:20px;
+    font-size:16px;
+    color:#1a1a1a;
+}
+.no-endorsements .text-content .txt{
+    width:180px;
+    line-height:16px;
+    font-size:13px;
+     margin:auto;
+     color:#666666;
+     margin-top:5px;
+}
+.en-list-holder{
+    padding-bottom: 100px;
+}
+
+.en-card {
+    padding: 10px;
+    background-color: #DEDEDE;
+    margin-bottom: 10px;
+}
+
+.en-card .card-header {
+    min-height: 30px;
+}
+
+.en-card .letter-box {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+    color: #FFF;
+}
+
+.en-card .text-box {
+    margin-left: 35px;
+    padding-top: 6px;
+    font-size: 14px;
+    line-height: 18px;
+    word-wrap:break-word;
+}
+
+.en-card span.tuser {
+    font-weight: bold;
+    padding-right: 5px;
+    display: inline;
+}
+.en-card span.text {
+    display: inline;
+}
+.en-card span.badge {
+    display: inline;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: rgb(248,166,58);
+}
+.en-card .card-content{
+    background-color:#FFF;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.45);
+    margin-top:8px;
+    border-radius: 2px 2px 3px 3px;
+}
+.en-card .badge-image{
+    height:150px;
+    background-color:#FFF;
+    background-size: contain;
+}
+.en-card .en-txt{
+   color: #504F4F;
+   line-height:18px;
+   padding:10px 10px 20px 10px;
+
+}
+.en-card .en-txt::after{
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #FFF;
+    position:absolute;
+    content:"";
+    top:auto;
+    bottom:-8px;
+    left:auto;
+    right:20px;
+    xbox-shadow:0px 0px 3px
+
+}
+.stat-box{
+    display: inline-block;
+    font-size:12px;
+    margin-top: 8px;
+}
+.like-box {
+    display: inline-block;
+}
+
+.like-box .like-img {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    margin-right: 5px;
+    background-image: url(../../images/recognition/recognition.png);
+    background-position: -8px -110px;
+    background-size: 280px 520px;
+    /* border: 1px solid; */
+}
+.like-box .like-img.liked{
+    background-image: url(../../images/recognition/recognition.png);
+    background-position: -8px -154px;
+    background-size: 280px 520px;
+}
+.like-box .like-count {
+    line-height: 30px;
+    height: 30px;
+    vertical-align: top;
+    padding-right: 5px;
+}
+
+.comment-box {
+    display: inline-block;
+    margin-left: 10px;
+    width: auto;
+}
+.comment-box .comment-img{
+   display: inline-block;
+   height: 24px;
+   width: 24px;
+   margin-right: 5px;
+   background-image: url(../../images/recognition/recognition.png);
+   background-position: -8px -54px;
+   background-size: 250px 490px;
+   /* border: 1px solid; */
+}
+.comment-box .comment-count{
+    line-height: 30px;
+    height: 30px;
+    vertical-align: top;
+}
+
+p.en-user {
+    float:right;
+    vertical-align:top;
+    display:inline-block;
+    line-height:35px;
+    font-size:14px;
+    font-weight:bold;
+}
+button.en-button {
+    top: auto;
+    bottom: 0px;
+    height: 60px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: rgb(248,166,58);
+    position: absolute;
+    border: 0px;
+    line-height:60px;
+    font-size:16px;
+    text-align:center;
+    color:#FFF;
+    -webkit-transform:translateZ(1px);
+    -moz-transform:translateZ(1px);
+    -o-transform:translateZ(1px);
+    transform:translateZ(1px);
+    font-weight: bold;
+}
+.endorsement-details{
+    padding-bottom:100px;
+}
+ .endorsement-details .viewall{
+    background-color:#FFF;
+    margin-top:-10px;
+    padding-top:10px;
+    line-height:30px;
+    height:30px;
+    padding-left:10px;
+    color: rgb(248,166,58);
+}
+.comment{
+    background-color: #FFF;
+    font-size: 12px;
+    padding: 10px;
+    border-top: 1px solid rgba(221, 221, 221, 0.61);
+}
+.comment .comment-head{
+    min-height: 24px;
+}
+.comment .comment-head .letter-box{
+     height: 24px;
+     width: 24px;
+     position: absolute;
+     text-align: center;
+     line-height: 24px;
+     font-size: 16px;
+     color: #FFF;
+     text-shadow: 0px 1px 1px #808080;
+     box-shadow: 0px 0px 2px #DDD;
+}
+.comment .user-name{
+    font-weight: bold;
+    padding-right: 5px;
+    display: inline-block;
+    margin-left: 30px;
+    padding: 5px;
+    line-height: 16px;
+
+}
+.comment .comment-content{
+    line-height:18px;
+    color: #777676;
+    word-wrap: break-word;
+}
+
+.comment-composer {
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    top: auto;
+    bottom: 0px;
+    background-color: #DDD;
+    -webkit-transform:translateZ(1px);
+    -moz-transform:translateZ(1px);
+    -o-transform:translateZ(1px);
+    transform:translateZ(1px);
+}
+.comment-composer .controlbox{
+    position:absolute;
+    left: 5px;
+    top: 5px;
+    width: auto;
+    bottom: 5px;
+    /* border: 1px solid #ABA9A9; */
+    right: 100px;
+    z-index: 9;
+    border-radius: 5px;
+}
+.comment-composer .controlbox .text{
+    resize: none;
+    box-sizing: content-box;
+    width:100%;
+    height:100%;
+    border-radius: 5px;
+    border: 0px;
+    border: 1px solid #BBBABA;
+}
+.comment-composer button{
+    height:50px;
+    width:80px;
+    position: absolute;
+    left: auto;
+    right: 10px;
+    height: 30px;
+    margin-top: 10px;
+    background-color: rgb(248,166,58);
+    border-radius: 5px;
+    border: 1px solid #AD9688;
+    box-shadow: 0px 0px 3px #868585;
+    color: #FFF;
+    font-size: 14px;
+}
+
+.name-suggester {
+    background-color: #FFF;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.65);
+    height:50px;
+    margin-top: 20px;
+}
+
+.name-suggester label {
+    color: #6D6B6B;
+    display: inline-block;
+    width: 80px;
+    padding-left: 20px;
+    height: 33px;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.name-suggester .controlbox {
+    width: auto;
+    display: inline-block;
+    right: 0px;
+    left: 100px;
+    position: absolute;
+}
+.name-suggester .controlbox input{
+    border: 0px;
+    color: rgb(248,166,58);
+    font-size: 14px;
+    font-weight: bold;
+}
+.name-suggester .controlbox input:focus{
+    outline: none;
+}
+
+.text-input{
+     background-color: #FFF;
+     border-bottom: 1px solid rgba(221, 221, 221, 0.48);
+     height:80px;
+     margin-top: 20px;
+}
+.text-input .comment-label{
+    color: #5F5E5E;
+    display: inline-block;
+    width: 80px;
+    padding-left: 20px;
+    height: 33px;
+    line-height: 14px;
+    font-weight: bold;
+}
+.text-input .comment-hint{
+    font-size: 11px;
+    position:absolute;
+    top:20px;
+    left: 33px;
+    color: #949191;
+}
+.text-input  .controlbox {
+    width: auto;
+    display: inline-block;
+    right: 0px;
+    left: 100px;
+    position: absolute;
+    height:80px;
+}
+.text-input .controlbox textarea{
+    border: 0px;
+    resize:none;
+    height: 70px;
+}
+.text-input .controlbox textarea:focus{
+    outline: none;
+
+}
+
+button.csel-button {
+
+    width:180px;
+    height: 40px;
+    right: 0px;
+    left: 0px;
+    background-color: rgb(248,166,58);
+    border: 0px;
+    line-height:40px;
+    font-size:16px;
+    text-align:center;
+    color:#FFF;
+    margin:auto;
+    margin-top:50px;
+}
+/*-- card list-- */
+.encard {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.63);
+    border-radius: 3px;
+    margin: 8px 16px;
+    position: relative;    
+}
+.encard.selected{
+    border: 3px solid #ED9501;
+}
+.encard.selected .card-image{
+    opacity: 0.5;
+}
+.encard.selected:after{
+    position: absolute;
+    content: '';
+    bottom: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    z-index: 1;
+    background: url(../../images/recognition/selectcard.png) no-repeat;
+    background-size: contain;
+}
+.encard .card-image{
+    background-size: contain;
+    background-repeat:no-repeat;
+   
+}
+.encard-preview{
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.63);
+    border-radius: 3px;
+    position: relative;
+    margin: 10px;
+}
+.encard-preview .replace{
+    position: absolute;
+    content: '';
+    bottom: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    z-index: 1;
+    background: url(../../images/recognition/replacecard.png) no-repeat;
+    background-size: contain;
+}
+
+.encard-preview .card-image{
+    background-size: contain;
+    background-repeat:no-repeat;
+   
+}
+
+.suggestionBox .name-item {
+    height: 20px;
+    background-color: #FFF;
+    line-height: 30px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.49);
+    padding: 10px;
+    padding-left: 20px;
+    color: #565656;
+    font-size: 14px;
+}
+.suggestionBox .name-item:first-child{
+        border-top: 1px solid rgba(221, 221, 221, 0.49);
+}
+.suggestionBox {
+    z-index: 999;
+    position: absolute;
+    top: 35px;
+    left: 0px;
+    right: 0px;
+}
+.feedback-message {
+    position: fixed;
+    background-color: rgba(248, 166, 58, 0.67);
+    height: auto;
+    width: 200px;
+    z-index: 99999;
+    left: 50%;
+    margin-left: -100px;
+    top: 40px;
+    /* margin-top: -31px; */
+    line-height: 26px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px dotted;
+    color: #676464;
+    font-weight: bold;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.47);
+}
