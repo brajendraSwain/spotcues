@@ -187,3 +187,12 @@
 .img-placeholder{
     background: url('../assets/assets/Image-placeholder.png');
 }
+.user-icon{
+    background: url('../assets/assets/profile.png');
+    cursor: pointer;
+    height: 36px;
+    width: 44px !important;
+    margin-top: 2px;
+    background-size: 100% 100%;
+    margin-right: 15px;
+}

@@ -19,8 +19,13 @@ var MarketplaceGridRow = React.createClass({
 
 var PageHead = React.createClass({
 	leftBtnHandle: function(){
-		if(this.props.leftBtnHandleFun){
-			this.props.leftBtnHandleFun();
+		if(this.props.leftBtnHandleFn){
+			this.props.leftBtnHandleFn();
+		}
+	},
+	rightBtnHandle: function(){
+		if(this.props.rightBtnHandleFn){
+			this.props.rightBtnHandleFn();
 		}
 	},
 	render: function() {
@@ -28,7 +33,7 @@ var PageHead = React.createClass({
 			<header className="page-head">
 				<div className="nav-left" onClick = {this.leftBtnHandle}>{this.props.leftBtn}</div>
 				<h4 className='title'>{'Marketplace'}</h4>
-				<div className="nav-right">{'rightButtonsArray'}</div>
+				<div className={"nav-right "+this.props.rightBtnClass} onClick = {this.rightBtnHandle}>{''}</div>
 			</header>
 		);
 	}
@@ -119,6 +124,10 @@ var AppContainer = React.createClass({
 
 	},
 
+	userBtnHandle: function(){
+
+	},
+
 	backButtonHandle: function(){
 		this.setPageNo(this.state.pageNo-1);
 	},
@@ -127,7 +136,8 @@ var AppContainer = React.createClass({
 		if(pageNo === 1){
 			return (
 				<section className="page-box">
-					<PageHead leftBtn={'Close'} leftBtnHandleFun = {this.closeBtnHandle}/>
+					<PageHead leftBtn={'Close'} leftBtnHandleFn = {this.closeBtnHandle} 
+					rightBtnHandleFn={this.userBtnHandle} rightBtnClass={'user-icon'}/>
 					<div className="page-content">
 						<MarketplaceGridViewLayout setPageNo = {this.setPageNo}/>
 					</div>
@@ -138,7 +148,8 @@ var AppContainer = React.createClass({
 		if(pageNo === 2){
 			return (
 				<section className="page-box">
-					<PageHead leftBtn={'Back'} leftBtnHandleFun = {this.backButtonHandle}/>
+					<PageHead leftBtn={'Back'} leftBtnHandleFn = {this.backButtonHandle} 
+					rightBtnHandle={this.userBtnHandle} rightBtnClass={'user-icon'} />
 					<div className="page-content">
 						<MarketplaceDetailedViewLayout/>
 					</div>
