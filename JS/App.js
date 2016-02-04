@@ -110,7 +110,7 @@ var ImageRow = React.createClass({
   }
 });
 
-var SpotcuesInput = React.createClass({
+var SpotcuesTextArea = React.createClass({
 	getInitialState: function(){
 		return {
 			inputVal: ''
@@ -120,8 +120,10 @@ var SpotcuesInput = React.createClass({
 		this.setState({inputVal: ev.target.val});
 	},
 	render: function() {
+		var dynamicCls =  this.props.className ? this.props.className : "";
 		return (
-			<input className="spotcues-input" type="text" value={this.state.inputVal} onChange={this.onChangeHandle}/>
+			<textarea className={"spotcues-text-area "+ dynamicCls} 
+			maxLength="150" type="text" value={this.state.inputVal} onChange={this.onChangeHandle}/>
 			);
 	}
 });
@@ -246,11 +248,95 @@ var MarketplaceProfileViewLayout = React.createClass({
 	}
 });
 
+var SpotcuesInput = React.createClass({
+	getInitialState: function(){
+		return {
+			inputVal: ''
+		};
+	},
+	onChangeHandle: function(ev){
+		this.setState({inputVal: ev.target.val});
+	},
+	render: function() {
+		var dynamicCls =  this.props.className ? this.props.className : "";
+		return (
+			<input className={"spotcues-input "+ dynamicCls} 
+			maxLength="150" type="text" value={this.state.inputVal} onChange={this.onChangeHandle}/>
+			);
+	}
+});
+
+var PriceDropDown = React.createClass({
+	getInitialState:function(){
+		return {isOpen:false, activeIndex: 0 }
+	},
+	rowClickHandle: function (index) {
+		this.setState({activeIndex: index});
+	},
+	closeDropDown: function(){
+		this.setState({isOpen: false});
+	},
+	openDropDown: function(){
+		this.setState({isOpen: true});
+	},
+	doneClickHandle: function(){
+		this.closeDropDown();
+	},
+	render:function(){
+		var self= this,
+			currencyArr = ['USD', 'EUR', 'GBP', 'INR' ];
+		var dropdownRows = currencyArr.map(function(currency, index){
+			var dynamicCls = index === self.state.activeIndex ? 'active' : '';
+			return (<div className={'dropdown-row '+dynamicCls} onClick={self.rowClickHandle.bind(self, index)}>{currency}</div>);
+		});
+		return(
+			<div className="price-dropdown-wrapper">
+				<span className="dollar-sign">$</span>
+				<span className="arrow-down" onClick={this.openDropDown}>&#x25BC;</span>
+				<SpotcuesInput className="price-selected"/>
+				{this.state.isOpen ?
+				<div>
+				 <div className="blur-background" onClick={this.closeDropDown}></div>
+				 <div className="dropdown">
+				 	<div className="dropdown-btns">
+				 		<span className="dropdown-close" onClick={this.closeDropDown}>Close</span>
+				 		<span className="dropdown-title">Select Currency</span>
+				 		<span className="dropdown-done" onClick={this.doneClickHandle}>Done</span>
+				 	</div>
+				 	{dropdownRows}
+				 </div>
+				</div>
+				 : ''}
+			</div>
+			);
+	}
+});
+
 var MarketplaceCreateAdLayout = React.createClass({
   render: function() {
     return (
     	<div className="profile-view">
-			
+    		<div className="title">
+    			<span className="text">Title</span>
+    			<span className="words-left">30 left</span>
+    		</div>
+			<SpotcuesTextArea className="itemTitleInput"/>
+			<div className="title">
+    			<span className="price">Price</span>
+    		</div>
+    		<PriceDropDown/>
+    		<div className="title">
+    			<span className="description">Description</span>
+    		</div>
+    		<SpotcuesTextArea className="descriptionInput"/>
+    		<div className="email">
+    			<span>Price</span>
+    		</div>
+    		
+    		<div className="title">
+    			<span className="price">Price</span>
+    		</div>
+
     	</div>
     	);
   }
