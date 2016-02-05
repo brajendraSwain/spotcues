@@ -415,6 +415,8 @@
     height:60px;
     border: 1px solid #d4d4d4;
     box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
   }
   .profile-view .title{
     padding-bottom: 10px;
@@ -616,4 +618,8 @@ div.phone input{
   /* display: block; */
   /* z-index: 99; */
   float:  left;
+}
+.nav-right{
+  padding-right: 15px;
+  margin-top: 5px;
 }
