@@ -115,7 +115,7 @@ var ImageRow = React.createClass({
     return (
     	<div className="image-section swipe-wrap">
     		<div className="image-scroll ">{imageElems}</div>
-    		{this.props.isAddMore ? <div className="addMore"></div>: ''}
+    		{this.props.isAddMore ? <div className="addMore">Add More</div>: ''}
     	</div>
     	);
   }
@@ -128,13 +128,19 @@ var SpotcuesTextArea = React.createClass({
 		};
 	},
 	onChangeHandle: function(ev){
-		this.setState({inputVal: ev.target.val});
+		this.setState({inputVal: ev.target.value});
+		debugger;
+		if(this.props.setTitleLength && ev.target.value !== undefined){
+			console.log('ev.target.value.length', ev.target.value.length);
+			this.props.setTitleLength(ev.target.value.length);
+		}
 	},
 	render: function() {
 		var dynamicCls =  this.props.className ? this.props.className : "";
 		return (
 			<textarea className={"spotcues-text-area "+ dynamicCls} 
-			maxLength="150" type="text" value={this.state.inputVal} onChange={this.onChangeHandle}/>
+			maxLength="150" type="text" value={this.state.inputVal} onChange={this.onChangeHandle} 
+			placeholder={this.props.placeHolder ? this.props.placeHolder: ''}/>
 			);
 	}
 });
@@ -277,32 +283,49 @@ var SpotcuesInput = React.createClass({
 	}
 });
 
-var PriceDropDown = React.createClass({
+var CurrencyDropDown = React.createClass({
 	getInitialState:function(){
-		return {isOpen:false, activeIndex: 0 }
+		return {isOpen:false, activeIndex: 0, activeCurrencyCode: 'USD', tempActiveCode: 'USD', tempActiveIndex: 0 }
 	},
-	rowClickHandle: function (index) {
-		this.setState({activeIndex: index});
+	rowClickHandle: function (index, code) {
+		debugger;
+		this.setState({
+			tempActiveIndex: index,
+			tempActiveCode: code
+		});
 	},
 	closeDropDown: function(){
+		this.setState({
+			tempActiveIndex: this.state.activeIndex,
+			tempActiveCode: this.state.activeCurrencyCode
+		});
 		this.setState({isOpen: false});
 	},
 	openDropDown: function(){
 		this.setState({isOpen: true});
 	},
 	doneClickHandle: function(){
+		this.setState({
+			activeIndex: this.state.tempActiveIndex,
+			activeCurrencyCode: this.state.tempActiveCode
+		});
 		this.closeDropDown();
 	},
 	render:function(){
-		var self= this,
-			currencyArr = ['USD', 'EUR', 'GBP', 'INR' ];
-		var dropdownRows = currencyArr.map(function(currency, index){
-			var dynamicCls = index === self.state.activeIndex ? 'active' : '';
-			return (<div className={'dropdown-row '+dynamicCls} onClick={self.rowClickHandle.bind(self, index)}>{currency}</div>);
+		var self= this;
+		var currencyObj = window.CommonData.currencyData;
+		var dropdownRows = Object.keys(currencyObj).map(function(key, index){
+			var dynamicCls = index === self.state.tempActiveIndex ? 'active' : '';
+			return (
+				<div className={'dropdown-row '+dynamicCls} onClick={self.rowClickHandle.bind(self, index, key)}>
+					<div className="currency-code">{currencyObj[key].code}</div>
+					<div className="currency-name">{currencyObj[key].name}</div>
+				</div>
+				);
 		});
 		return(
 			<div className="price-dropdown-wrapper">
-				<span className="dollar-sign">$</span>
+				<span className="dollar-sign">{currencyObj[self.state.activeCurrencyCode].symbol}</span>
 				<span className="arrow-down" onClick={this.openDropDown}>&#x25BC;</span>
 				<SpotcuesInput className="price-selected"/>
 				{this.state.isOpen ?
@@ -324,22 +347,29 @@ var PriceDropDown = React.createClass({
 });
 
 var MarketplaceCreateAdLayout = React.createClass({
+  getInitialState:function(){
+		return { titleLength: 0 }
+	},
+	setTitleLength: function(newTitleLength){
+		this.setState({titleLength: newTitleLength});
+	},
   render: function() {
+  	console.log('this.state.titleLength -----', this.state.titleLength);
     return (
     	<div className="createAd-view">
     		<div className="title">
     			<span className="text">Title</span>
-    			<span className="words-left">30 left</span>
+    			<span className="words-left">{this.state.titleLength ? (150 - this.state.titleLength) +" Left" : "Max 150 Characters"}</span>
     		</div>
-			<SpotcuesTextArea className="itemTitleInput"/>
+			<SpotcuesTextArea className="itemTitleInput" placeHolder ={"Write an interesting heading"} setTitleLength={this.setTitleLength}/>
 			<div className="title">
     			<span className="price">Price</span>
     		</div>
-    		<PriceDropDown/>
+    		<CurrencyDropDown/>
     		<div className="title">
     			<span className="description">Description</span>
     		</div>
-    		<SpotcuesTextArea className="descriptionInput"/>
+    		<SpotcuesTextArea className="descriptionInput" placeHolder ={"Write all the details"}/>
     		<div className="email">
     			<span>Email</span>
     			<SpotcuesInput className="email"/>

@@ -484,30 +484,37 @@
   }
   .dropdown{
     width: 300px;
-    min-height: 100px;
+    max-height: 400px;
     background: #fff;
     z-index: 2;
     position: fixed;
-    top: 150px;
+    top: 201px;
     left: 50%;
     margin-left: -150px;
     box-shadow: 0px 0px 2px #fff;
+    overflow-y: auto;
+    /* padding-top: 51px; */
   }
   .dropdown-row{
     height: 40px;
     line-height:  40px;
-    padding-left:  20px;
-    font-size: 16px;
+    padding-left: 15px;
+    font-size: 14px;
     position:  relative;
     cursor: pointer;
   }
   .dropdown-row:hover {
       background: #e4e4e4;
+      /* color:  red; */
   }
 
   .dropdown-btns{
     height: 50px;
     border-bottom: 1px solid #d4d4d4;
+    position: fixed;
+    top: 150px;
+    background: #fff;
+    width:  300px;
   }
 
   .dropdown-close, .dropdown-title, .dropdown-done{
@@ -524,7 +531,7 @@
   }
   .dropdown-done{
     color: #f5a623;
-    padding-left: 45px;
+    padding-left: 44px;
   }
   .dropdown-done, .dropdown-close{
     cursor: pointer;
@@ -579,11 +586,15 @@ div.phone input{
   box-sizing:  border-box;
   color: rgb(248,166,58);
   font-weight: 600;
-  font-size: 22px;
-  line-height: 110px;
+  font-size: 18px;
+  line-height: 160px;
   /* padding:  10px 36px; */
   /* white-space: pre-wrap; */
   text-align: center;
+}
+.currency-code{
+  display: inline-block;
+  float: left;
 }
 .title .price,
 .title .text,
@@ -595,4 +606,14 @@ div.phone input{
   font-weight: 600;
   padding-left: 15px;
   /* line-height: 14px; */
+} 
+.currency-name{
+  padding-left: 40px;
+  text-overflow:  ellipsis;
+  overflow:  hidden;
+  white-space: nowrap;
+  max-width: 81px;
+  /* display: block; */
+  /* z-index: 99; */
+  float:  left;
 }

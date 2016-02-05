@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' dev.spotcues.com dev.io.spotcues.com www.spotcues.com io.spotcues.com data: gap: https://ssl.gstatic.com *; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-inline'  'unsafe-eval' *; connect-src *; img-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <title>Spotcues</title>
     <link rel="stylesheet" href="Css/recognition.css" />
     <link rel="stylesheet" href="Css/myCss.css" />
@@ -13,6 +18,7 @@
     <script src="build/react/react-dom.js"></script>
     <script src="build/jQuery/jquery.min.js"></script>
     <script src="build/babel.js"></script>
+    <script type="text/babel" src="JS/DataStore/CommonData.js"></script>
     <script type="text/babel" src="JS/App.js"></script>
   </body>
 </html>
