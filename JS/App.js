@@ -18,10 +18,20 @@ var MarketplaceGridRow = React.createClass({
 				<div className="left-section img-placeholder"></div>
 				<div className="right-section">
 					<div className="description">{this.props.item.title}</div>
-					<div className="price">{this.props.item.price}</div>
+					<div className="price-section">
+		    			<div className="tag-icon"></div>
+		    			<span>${this.props.item.price}</span>
+		    		</div>
 				</div>
 				<div className="bottom-section">
-					<div className="posed-by">{this.props.item.user}</div>
+					<div className="posted-by-section">
+		    			<div className="text-section">
+		    				<p>
+		    					<span className="posted">Posted by</span>
+		    					<span className="user">{this.props.item.user}</span>
+		    				</p>
+		    			</div>
+		    		</div>
 					<span className="posed-time-ago">{this.props.item.posedBefore}</span>
 				</div>
 			</div>
@@ -105,6 +115,7 @@ var ImageRow = React.createClass({
     return (
     	<div className="image-section swipe-wrap">
     		<div className="image-scroll ">{imageElems}</div>
+    		{this.props.isAddMore ? <div className="addMore"></div>: ''}
     	</div>
     	);
   }
@@ -315,7 +326,7 @@ var PriceDropDown = React.createClass({
 var MarketplaceCreateAdLayout = React.createClass({
   render: function() {
     return (
-    	<div className="profile-view">
+    	<div className="createAd-view">
     		<div className="title">
     			<span className="text">Title</span>
     			<span className="words-left">30 left</span>
@@ -330,12 +341,15 @@ var MarketplaceCreateAdLayout = React.createClass({
     		</div>
     		<SpotcuesTextArea className="descriptionInput"/>
     		<div className="email">
-    			<span>Price</span>
+    			<span>Email</span>
+    			<SpotcuesInput className="email"/>
     		</div>
     		
-    		<div className="title">
-    			<span className="price">Price</span>
+    		<div className="phone">
+    			<span className="phone">Phone</span>
+    			<SpotcuesInput className="phone"/>
     		</div>
+    		<ImageRow isAddMore={true}/>
 
     	</div>
     	);
@@ -451,7 +465,8 @@ var AppContainer = React.createClass({
 		if(pageName === globalStore.pageNameObj.createAd){
 			return (
 				<section className="page-box">
-					<PageHead leftBtn={'Back'} leftBtnHandleFn = {this.backButtonHandle} pageTitle={'Create Ad'}/>
+					<PageHead leftBtn={'Back'} leftBtnHandleFn = {this.backButtonHandle} pageTitle={'Create Ad'}
+					rightBtnHandleFn={''} rightBtnName={'Publish'}/>
 					<div className="page-content">
 						<MarketplaceCreateAdLayout setPageName = {this.setPageName}/>
 					</div>
