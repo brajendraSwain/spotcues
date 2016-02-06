@@ -1063,6 +1063,6 @@ var currencyData = {
     }
 };
 
-window.CommonData = {
+module.exports = {
     currencyData : currencyData
-}
+};
