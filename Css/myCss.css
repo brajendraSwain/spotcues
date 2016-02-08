@@ -253,8 +253,8 @@
   .user-icon{
       background: url('../assets/assets/profile.png');
       cursor: pointer;
-      height: 36px;
-      width: 44px !important;
+      height: 30px;
+      width: 20px !important;
       margin-top: 2px;
       background-size: 100% 100%;
       margin-right: 15px;
@@ -452,11 +452,12 @@
     padding: 15px;
     position:  relative;
   }
-  .dollar-sign{
+  .currency-sign{
     color: #2d2d2d;
     font-size: 22px;
     font-weight: 600;
     padding-right: 10px;
+    float: left;
   }
   .arrow-down{
     color: #2d2d2d;
@@ -464,7 +465,7 @@
     font-weight: 600;
     padding-right: 10px;
     cursor: pointer;
-    position: absolute;
+    /* position: absolute; */
     line-height: 1px;
     top: 31px;
     left: 35px;
@@ -473,6 +474,7 @@
     color: #444444;
     font-size: 22px;
     font-weight: 600;
+    margin-left:  0px;
   }
   .blur-background{
     background: #000;
@@ -614,7 +616,7 @@ div.phone input{
   text-overflow:  ellipsis;
   overflow:  hidden;
   white-space: nowrap;
-  max-width: 81px;
+  max-width: 160px;
   /* display: block; */
   /* z-index: 99; */
   float:  left;

@@ -13,6 +13,7 @@ module.exports = React.createClass({
 		};
 	},
 	rowClickHandle: function (index, code) {
+		console.log("index, code", index, code);
 		this.setState({
 			tempActiveIndex: index,
 			tempActiveCode: code
@@ -33,7 +34,7 @@ module.exports = React.createClass({
 			activeIndex: this.state.tempActiveIndex,
 			activeCurrencyCode: this.state.tempActiveCode
 		});
-		this.closeDropDown();
+		this.setState({isOpen: false});
 	},
 	render:function(){
 		var self= this,
@@ -50,7 +51,7 @@ module.exports = React.createClass({
 
 		return(
 			<div className="price-dropdown-wrapper">
-				<span className="dollar-sign">{currencyObj[self.state.activeCurrencyCode].symbol}</span>
+				<span className="currency-sign">{currencyObj[self.state.activeCurrencyCode].symbol}</span>
 				<span className="arrow-down" onClick={this.openDropDown}>&#x25BC;</span>
 				<SpotcuesInput className="price-selected"/>
 				{this.state.isOpen ?

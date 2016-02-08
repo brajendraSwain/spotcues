@@ -10,7 +10,8 @@ var React = require('react'),
 	SpotcuesInput = require('./SpotcuesInput.react'),
 	CurrencyDropDown = require('./CurrencyDropDown.react'),
 	MarketplaceCreateAdLayout = require('./MarketplaceCreateAdLayout.react'),
-	MarketplaceReplyPageLayout = require('./MarketplaceReplyPageLayout.react');
+	MarketplaceReplyPageLayout = require('./MarketplaceReplyPageLayout.react'),
+	AjaxManager = require('./../Utils/AjaxManager');
 
 
 module.exports = React.createClass({
@@ -36,6 +37,27 @@ module.exports = React.createClass({
 
 	closeBtnHandle: function(){
 
+	},
+
+	publishClickHandle: function(){
+		var self = this,
+			createAdOptions = {
+			  "title": document.querySelector('.createAd-view .itemTitleInput').value,
+			  "price": document.querySelector('.createAd-view .price-selected').value,
+			  "currencySymbol": document.querySelector('.createAd-view .currency-sign').innerText,
+			  "description": document.querySelector('.createAd-view .descriptionInput').value,
+			  "email": document.querySelector('.createAd-view input.email').value,
+			  "phone": document.querySelector('.createAd-view input.phone').value
+			};
+		console.log('createAdOptions....', createAdOptions);
+		AjaxManager.createAd(createAdOptions).then(function (data) {
+			console.log('create data.......  ', JSON.stringify(data));
+			if(data.success){
+				//get the updated list of ad.. 
+				globalStore.pageNavStack.push(globalStore.pageNameObj.home);
+				self.setPageName(globalStore.pageNavStack[globalStore.pageNavStack.length-1]);
+			}
+		});
 	},
 
 	userBtnHandle: function(){
@@ -89,7 +111,7 @@ module.exports = React.createClass({
 			return (
 				<section className="page-box">
 					<PageHead leftBtn={'Back'} leftBtnHandleFn = {this.backButtonHandle} pageTitle={'Create Ad'}
-					rightBtnHandleFn={''} rightBtnName={'Publish'}/>
+					rightBtnHandleFn={this.publishClickHandle} rightBtnName={'Publish'}/>
 					<div className="page-content">
 						<MarketplaceCreateAdLayout setPageName = {this.setPageName}/>
 					</div>

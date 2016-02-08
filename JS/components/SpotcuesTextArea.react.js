@@ -7,9 +7,8 @@ module.exports = React.createClass({
 	},
 	onChangeHandle: function(ev){
 		this.setState({inputVal: ev.target.value});
-		debugger;
+		// debugger;
 		if(this.props.setTitleLength && ev.target.value !== undefined){
-			console.log('ev.target.value.length', ev.target.value.length);
 			this.props.setTitleLength(ev.target.value.length);
 		}
 	},

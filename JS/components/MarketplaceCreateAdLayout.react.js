@@ -13,7 +13,6 @@ module.exports = React.createClass({
     	this.setState({titleLength: newTitleLength});
     },
     render: function() {
-    	console.log('this.state.titleLength -----', this.state.titleLength);
         return (
         	<div className="createAd-view">
         		<div className="title">

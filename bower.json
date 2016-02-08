@@ -1,0 +1,21 @@
+{
+  "name": ": spotcues",
+  "description": "Spotcues",
+  "main": "JS/App.js",
+  "authors": [
+    "Brajendra Swain"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/brajendraSwain/spotcues",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0"
+  }
+}
