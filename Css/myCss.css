@@ -332,6 +332,7 @@
     font-size: 26px;
     color: #222222;
     line-height: 33px;
+    padding-bottom:  10px;
   }
 
   .reply-row .time-before{
@@ -458,6 +459,7 @@
     font-weight: 600;
     padding-right: 10px;
     float: left;
+    line-height: 20px;
   }
   .arrow-down{
     color: #2d2d2d;
@@ -624,4 +626,36 @@ div.phone input{
 .nav-right{
   padding-right: 15px;
   margin-top: 5px;
+}
+.spotcues-input-wrapper-div{
+  display: inline-block;
+}
+.input-errors{
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #f1946d !important;
+}
+.price-dropdown-wrapper .input-errors{
+  padding-left: 15px;
+}
+input.error{
+  border: 1px solid #f1946d;
+}
+.formDiv{
+  z-index: 10;
+  height: 100px;
+  width: 400px;
+  background: #fff;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  margin-left: -200px;
+  border-radius: 5px
+}
+.formDiv form{
+  margin-top: 40px;
+  margin-left: 15px;
+}
+.imageUploader{
+  width: 100%;
 }

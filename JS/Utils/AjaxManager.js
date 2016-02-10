@@ -1,4 +1,3 @@
-var $ = require('./../../bower_components/jquery/dist/jquery.min.js');
 
 // var ajaxProcessor = function(reqURL, requestData, callback) {
 // 	$.ajax({
@@ -25,10 +24,15 @@ var appData = {
 };
 
 var ajaxProcessor = function(reqURL, requestData) {
+
+	console.log('requestData............', JSON.stringify(requestData));
+	console.log('url............', appData.appServerURL+reqURL);
+
 	return $.ajax({
 		type: "POST",
 		url: appData.appServerURL+reqURL,
 		data: JSON.stringify(requestData),
+		accept:'application/json',
 		contentType: 'application/json',
 		success: function(data) {
 			
@@ -43,10 +47,10 @@ var ajaxProcessor = function(reqURL, requestData) {
 var createAd = function(optiops){
 	var requestData = {
 		  "_channel": "5696217782c54c4f4aef0cfd",
-		  "text": "",
+		  "text": optiops.title ? optiops.title: "",
 		  "type": "SPONSORED",
 		  "subtitle": "The heading - 23 Centurian Avalanche c4 For sale",
-		  "content": "The actual description goes here",
+		  "content": optiops.description ? optiops.description: "",
 		  "_user":"55d70421ad97c4bb2f8d09df",
 			"user":"MarketPlaceUser",
 		  "attachments": [
@@ -70,24 +74,22 @@ var createAd = function(optiops){
 		    "appName": "MarketPlace",
 		    "actions": [],
 		    "customData": {
-		      "title": optiops.title ? optiops.title: '',
-		      "price": optiops.price ? optiops.price: '',
-		      "currencySymbol": optiops.currencySymbol ? optiops.currencySymbol: '' ,
-		      "description": optiops.description ? optiops.description: '',
-		      "email": optiops.email ? optiops.email: '',
-		      "phone": optiops.phone ? optiops.phone: ''
+		      "price": optiops.price ? optiops.price: "",
+		      "currencySymbol": optiops.currencySymbol ? optiops.currencySymbol: "" ,
+		      "email": optiops.email ? optiops.email: "",
+		      "phone": optiops.phone ? optiops.phone: ""
 		    }
 		  }
 	};
 
-	var reqURL = 'apps/feed';
+	var reqURL = 'post/create';
 
 	return ajaxProcessor(reqURL, requestData);
 
 };
 
 var getAdList = function(){
-	var reqURL = 'post/create';
+	var reqURL = 'apps/feed';
 	var requestData = {
 	  "_app": "5696215c82c54c4f4aef0cfc",
 	  "_user": "55d70421ad97c4bb2f8d09df",
@@ -97,12 +99,26 @@ var getAdList = function(){
 	return ajaxProcessor(reqURL, requestData);
 };
 
-var getAllCommentList = function(){
-	var reqURL = 'apps/feed';
+var getCommentList = function(optiops){
+	var reqURL = 'comments';
 	var requestData = {
-	  "_app": "5696215c82c54c4f4aef0cfc",
 	  "_user": "55d70421ad97c4bb2f8d09df",
+	  "_post": optiops.advId,// read from the response
 	  "_channel": "5696217782c54c4f4aef0cfd"
+	};
+
+
+	return ajaxProcessor(reqURL, requestData);
+};
+
+var createComment = function(optiops){
+	var reqURL = 'comment/create';
+	var requestData = {
+	  "_user": "55d70421ad97c4bb2f8d09df",
+	  "_channel": "5696217782c54c4f4aef0cfd",
+	  "_post": optiops.advId,// read from the response
+	  "user": optiops.user,
+	  "text": optiops.text
 	};
 
 	return ajaxProcessor(reqURL, requestData);
@@ -114,5 +130,6 @@ module.exports = {
 	ajaxProcessor: ajaxProcessor,
 	createAd: createAd,
 	getAdList: getAdList,
-	getAllCommentList: getAllCommentList
+	getCommentList: getCommentList,
+	createComment: createComment
 };

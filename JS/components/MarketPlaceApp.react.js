@@ -21,11 +21,43 @@ module.exports = React.createClass({
 			replyPage: {
 				user: '',
 				comment : {}
-			}
+			},
+			publishButtonState: false,
+			appState: this.props.appState
 		};
 	},
 	setPageName: function(newPageName){
 		this.setState({pageName: newPageName});
+	},
+
+	getFromAppState: function(){
+		if(arguments.length === 1){
+			return this.state.appState[arguments[0]];
+		}
+
+		if(arguments.length === 2){
+			return this.state.appState[arguments[0]][arguments[1]];
+		}
+
+		if(arguments.length === 3){
+			return this.state.appState[arguments[0]][arguments[1]][arguments[2]];
+		}
+	},
+
+	setInAppState: function(options){
+		if(options.keyArr.length === 1){
+			this.state.appState[options.keyArr[0]] = options.value;
+		}else if(options.keyArr.length === 2){
+			this.state.appState[options.keyArr[0]][options.keyArr[1]] = options.value;
+		}else if(options.keyArr.length === 3){
+			this.state.appState[options.keyArr[0]][options.keyArr[1]][options.keyArr[2]] = options.value;
+		}else{
+			console.error('key level only till 3 allowed!!');
+			return false;
+		}
+	},
+	refreshApp: function(){
+		this.setState({});
 	},
 
 	setReplyPageData: function(userName, comment){
@@ -34,28 +66,46 @@ module.exports = React.createClass({
 				comment : comment
 			}});
 	},
+	changePublishState: function(newState){
+		this.setState({publishButtonState: newState});
+	},
 
 	closeBtnHandle: function(){
 
 	},
+	onLoadHandle: function(){
+		console.log(this);
+		window.elem  = event;
+	},
 
 	publishClickHandle: function(){
+		// debugger;
 		var self = this,
+			currentTime = new Date(),
 			createAdOptions = {
 			  "title": document.querySelector('.createAd-view .itemTitleInput').value,
 			  "price": document.querySelector('.createAd-view .price-selected').value,
 			  "currencySymbol": document.querySelector('.createAd-view .currency-sign').innerText,
 			  "description": document.querySelector('.createAd-view .descriptionInput').value,
 			  "email": document.querySelector('.createAd-view input.email').value,
-			  "phone": document.querySelector('.createAd-view input.phone').value
+			  "phone": document.querySelector('.createAd-view input.phone').value,
+			  "createdAt": currentTime.toString()
 			};
 		console.log('createAdOptions....', createAdOptions);
 		AjaxManager.createAd(createAdOptions).then(function (data) {
 			console.log('create data.......  ', JSON.stringify(data));
 			if(data.success){
-				//get the updated list of ad.. 
-				globalStore.pageNavStack.push(globalStore.pageNameObj.home);
-				self.setPageName(globalStore.pageNavStack[globalStore.pageNavStack.length-1]);
+				//get the updated list of ad..
+				AjaxManager.getAdList().then(function (addList) { 
+					if(addList.success){
+						self.setInAppState({
+							keyArr: ['addList'],
+							value: addList.result
+						});
+						globalStore.pageNavStack.push(globalStore.pageNameObj.home);
+						self.setPageName(globalStore.pageNavStack[globalStore.pageNavStack.length-1]);
+					}
+				});
 			}
 		});
 	},
@@ -70,6 +120,10 @@ module.exports = React.createClass({
 		this.setPageName(globalStore.pageNavStack[globalStore.pageNavStack.length-1]);
 	},
 
+	componentDidMount: function() {
+	    this.refs.iframe.getDOMNode().addEventListener('load', this.onLoadHandle);
+	},
+
 	selectedPage: function(pageName){
 		if(pageName === globalStore.pageNameObj.home){
 			return (
@@ -77,7 +131,8 @@ module.exports = React.createClass({
 					<PageHead leftBtn={'Close'} leftBtnHandleFn = {this.closeBtnHandle} 
 					rightBtnHandleFn={this.userBtnHandle} rightBtnClass={'user-icon'} pageTitle={'Marketplace'}/>
 					<div className="page-content">
-						<MarketplaceGridViewLayout setPageName = {this.setPageName}/>
+						<MarketplaceGridViewLayout setPageName = {this.setPageName} appState={this.state.appState}
+						setInAppState={this.setInAppState} getFromAppState={this.getFromAppState} refreshApp={this.refreshApp}/>
 					</div>
 				</section>
 				);
@@ -90,7 +145,8 @@ module.exports = React.createClass({
 					rightBtnHandleFn={this.userBtnHandle} rightBtnClass={'user-icon'} pageTitle={'Marketplace'}/>
 					<div className="page-content">
 						<MarketplaceDetailedViewLayout setPageName = {this.setPageName} 
-						setReplyPageData = {this.setReplyPageData}/>
+						setReplyPageData = {this.setReplyPageData} appState={this.state.appState}
+						setInAppState={this.setInAppState} getFromAppState={this.getFromAppState} refreshApp={this.refreshApp}/>
 					</div>
 				</section>
 				);
@@ -111,9 +167,11 @@ module.exports = React.createClass({
 			return (
 				<section className="page-box">
 					<PageHead leftBtn={'Back'} leftBtnHandleFn = {this.backButtonHandle} pageTitle={'Create Ad'}
-					rightBtnHandleFn={this.publishClickHandle} rightBtnName={'Publish'}/>
+					rightBtnHandleFn={this.publishClickHandle} rightBtnName={'Publish'} 
+					rightBtnClass={'publish '+this.state.publishButtonState ? 'active': 'inactive'} />
 					<div className="page-content">
-						<MarketplaceCreateAdLayout setPageName = {this.setPageName}/>
+						<MarketplaceCreateAdLayout setPageName = {this.setPageName} changePublishState={this.changePublishState} 
+						publishButtonState = {this.state.publishButtonState} />
 					</div>
 				</section>
 				);
@@ -136,7 +194,8 @@ module.exports = React.createClass({
 		var self = this;
 		return (
 			<div className="vl main-container swipe-wrap">
-				{self.selectedPage(self.state.pageName)}	
+				{self.selectedPage(self.state.pageName)}
+				<iframe name='iframe_name' id="myIframe" ref='iframe' ></iframe>	
 			 </div>
 			);
 		}

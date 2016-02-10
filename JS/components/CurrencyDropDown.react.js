@@ -53,7 +53,7 @@ module.exports = React.createClass({
 			<div className="price-dropdown-wrapper">
 				<span className="currency-sign">{currencyObj[self.state.activeCurrencyCode].symbol}</span>
 				<span className="arrow-down" onClick={this.openDropDown}>&#x25BC;</span>
-				<SpotcuesInput className="price-selected"/>
+				<SpotcuesInput className="price-selected" publishButtonState = {this.props.publishButtonState} changePublishState={this.props.changePublishState} isRequired={true} isNumeric={true}/>
 				{this.state.isOpen ?
 				<div>
 				 <div className="blur-background" onClick={this.closeDropDown}></div>

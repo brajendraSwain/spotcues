@@ -19,58 +19,76 @@ module.exports = React.createClass({
 		this.props.setPageName(globalStore.pageNavStack[globalStore.pageNavStack.length-1]);
 		this.props.setReplyPageData(user, cmt);
 	},
+  calculateTimeBefore: function(createdTime){
+    var timeUnit = 1000; // hours*minutes*seconds*milliseconds
+    var currentTime = new Date();
+    var postedTime = new Date(createdTime)
+    var diffSecs = Math.round(Math.abs((currentTime.getTime() - postedTime.getTime())/(timeUnit)));
+    
+    var posteTimeBefore;
+
+    if(diffSecs < 60){ // mins
+      posteTimeBefore = (diffSecs).toFixed(0) + ' secs'; 
+    }else if(diffSecs < 60*60){ //hrs
+      posteTimeBefore = (diffSecs/60).toFixed(0) + ' mins'; 
+    }else if(diffSecs < 60*60*24){ //day
+      posteTimeBefore = (diffSecs/(60*60)).toFixed(0) + ' hrs';
+    }else{
+      posteTimeBefore = (diffSecs/(60*60*24)).toFixed(0) + ' days';
+    }
+    return posteTimeBefore;
+  },
   render: function() {
+    var itemDetailData = this.props.appState['itemDetailData'];
   	var self = this,
-        commentElems = this.state.commentArr.map(function(cmt, index){
+        commentElems = itemDetailData._comments.map(function(cmt, index){
         		var childComments, 
                 dynamicCls;
 
-        		if(cmt.commentArr){
-        			childComments = cmt.commentArr.map(function(childCmt, chIndex){
+        		if(cmt.comments){
+        			childComments = cmt._comments.map(function(childCmt, chIndex){
+                var childCommentedTimeBefore = self.calculateTimeBefore(childCmt.createdAt);
         				return (<div className={"child-reply-row "}>
       				  			<div className="replyText">{childCmt.text}</div>
-      				  			<span className="user">{childCmt.userName}</span> <div className="dot"></div>
-      				  			<span className="time-before">{childCmt.timeBefore}</span>
+      				  			<span className="user">{childCmt.user}</span> <div className="dot"></div>
+      				  			<span className="time-before">{childCommentedTimeBefore}</span>
       				  		</div>);
         			});
         		}
         		dynamicCls = index === 0 ? 'first': '';
+
+            var commentedTimeBefore = self.calculateTimeBefore(cmt.createdAt);
         		return (<div className={"reply-row "+dynamicCls}>
       		  			<div className="replyText">{cmt.text}</div>
-      		  			<span className="user">{cmt.userName}</span> <div className="dot"></div>
-      		  			<span className="time-before">{cmt.timeBefore}</span> <div className="dot"></div>
-      		  			<span className="reply-text-btn" onClick={self.handleReplyClick.bind(self, cmt.userName, cmt)}>{"Reply"}</span>
+      		  			<span className="user">{cmt.user}</span> <div className="dot"></div>
+      		  			<span className="time-before">{commentedTimeBefore}</span> <div className="dot"></div>
+      		  			<span className="reply-text-btn" onClick={self.handleReplyClick.bind(self, cmt.user, cmt)}>{"Reply"}</span>
       		  			<div className="border-div"></div>
       		  			{childComments}
       		  		</div>);
         	});
 
+  var posteTimeBefore = self.calculateTimeBefore(itemDetailData.createdAt);
+    
+
+  var currencySymbol = itemDetailData.sponsoredData.customData.currencySymbol ? itemDetailData.sponsoredData.customData.currencySymbol: '';
+
     return (
     	<div className="market-grid detailed-view">
-    		<div className="title-section">{"Moving-Sale - All Bedroom Furniture Must Go"}</div>
+    		<div className="title-section">{itemDetailData.text}</div>
     		<div className="price-section">
     			<div className="tag-icon"></div>
-    			<span>$20 - $540</span>
+    			<span>{currencySymbol + ' '+ itemDetailData.sponsoredData.customData.price}</span>
     		</div>
-    		<div className="desc-1-section">{"Moving January1st. Selling all bedroom furniture in photos."}</div>
-    		<div className="desc-2-section">
-    			<p>Wardrobe - $100 (reduced)</p>
-    			<p>Bookcase - $80</p>
-    			<p>(2) Table lamps - $100 per pairs</p>
-    			<p>Wardrobe - $100 (reduced)</p>
-    			<p>Wardrobe - $100 (reduced)</p>
-    		</div>
-    		<div className="desc-3-section">
-    			<p>Happy to send more pictures or details upon request. Everything must go. Make me an offer!!</p> 
-    		</div>
+    		<div className="desc-1-section">{itemDetailData.content}</div>
     		<ImageRow/>
     		<div className="posted-by-section">
     			<div className="text-section">
     				<p>
     					<span className="posted">Posted by</span>
-    					<span className="user">User</span>
+    					<span className="user">{itemDetailData.user}</span>
     				</p>
-    				<p><span className="time">10 hrs</span></p>
+    				<p><span className="time">{posteTimeBefore}</span></p>
     			</div>
     			<div className="button-section">
     				<div className="mail-icon"></div>
@@ -81,7 +99,7 @@ module.exports = React.createClass({
     			<span className="replyWord">REPLIES</span>
     			{commentElems}
     		</div>
-    		<CommentComposer />
+    		<CommentComposer item = {itemDetailData} setInAppState={this.props.setInAppState} appState={this.props.appState} refreshApp={this.props.refreshApp}/>
     	</div>
     	);
   }

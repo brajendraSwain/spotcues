@@ -10,10 +10,42 @@
     <title>Spotcues</title>
     <link rel="stylesheet" href="Css/recognition.css" />
     <link rel="stylesheet" href="Css/myCss.css" />
+
   </head>
 
   <body>
     <div id="container"></div>
+    <div id="fileUpload" style="display: none">
+      <div class="blur-background" onclick="submitHandle()"></div>
+      <div class="formDiv">
+          <form id="imageForm" method="post" action="http://dev.io.spotcues.com/image/v2/upload" enctype="multipart/form-data" >
+                <input id="fileInput" type="file" name="fileField"/>
+                <input type="submit" value="submit"/>
+              </form>
+      </div>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="build/jquery.iframe-post-form.js"></script>
     <script src="build/bundle.js"></script>
+    <script type="text/javascript">
+      function submitHandle () {
+        document.querySelector('#fileInput').value = "";
+        document.querySelector('#fileUpload').style.display="none";
+      }
+      function onloadHandle(){
+       
+      }
+
+      $(document).ready(function(){
+          $('#imageForm').iframePostForm({
+              post : function(response) {
+                 console.log('post', response);
+              },
+              complete : function (response) {
+                console.log('complete', response);
+             }
+           });
+      });
+    </script>
   </body>
 </html>
