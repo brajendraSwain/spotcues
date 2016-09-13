@@ -1,5 +1,7 @@
 # spotcues
 
+It's application done using reactJS. 
+
 # How to run ?
 
 --  Go to project folder.
